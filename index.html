@@ -291,7 +291,7 @@ const state = { skills: new Set(), q: '', sort: 'number' };
 const app = document.getElementById('app');
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const chip = s => `<span class="chip" style="--c:var(--${s})">${esc(SKILLS[s] || s)}</span>`;
-const mins = c => Math.max(1, Math.round(c.words / 230)) + ' min read';
+const mins = c => Math.max(1, Math.ceil(c.words / 230)) + ' min read';
 
 function setDesign(n, save) {
   n = String(n);
