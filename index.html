@@ -141,6 +141,75 @@ body[data-design="5"] .card .q { font-size: .9rem; }
   body[data-design="5"] .card .chips { grid-column: 3; grid-row: 1 / span 2; flex-direction: column; align-items: flex-start; }
   body[data-design="5"] .card .meta { grid-column: 4; grid-row: 1 / span 2; margin: 0; }
 }
+
+/* ---------- 6. Deck: one question at a time on a card you flip ---------- */
+body[data-design="6"] {
+  --bg: #ffffff; --surface: #ffffff; --text: #1d1330; --muted: #6a5f7c; --line: #e6dfee; --accent: #c7305f;
+  --head-bg: transparent; --head-text: #ffffff;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; --font-head: Georgia, "Times New Roman", serif; --radius: 16px;
+  background: linear-gradient(135deg, #2b1055 0%, #c7305f 62%, #ff9a3c 100%) fixed;
+}
+body[data-design="6"] header { border-bottom: 1px solid rgba(255,255,255,.3); }
+body[data-design="6"] .banner { background: rgba(0,0,0,.28); color: #fff; border: 0; }
+body[data-design="6"] article { background: #fff; padding: 28px clamp(18px, 4vw, 44px); border-radius: 20px; }
+body[data-design="6"] .intro { margin-top: 28px; border: 0; }
+.deck { max-width: 700px; margin: 0 auto; color: #fff; font-family: var(--font-ui); }
+.deck-count { text-align: center; font-size: .9rem; opacity: .9; margin-bottom: 12px; letter-spacing: .04em; }
+.flip { display: block; width: 100%; border: 0; background: none; padding: 0; font: inherit; color: inherit; text-align: left; cursor: pointer; perspective: 1400px; }
+.flip .inner { display: grid; transition: transform .55s cubic-bezier(.2,.7,.2,1); transform-style: preserve-3d; }
+.flip.on .inner { transform: rotateY(180deg); }
+.flip .face { grid-area: 1 / 1; display: flex; flex-direction: column; gap: 16px; min-height: 340px; padding: clamp(22px, 5vw, 40px); border-radius: 24px;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden; box-shadow: 0 24px 60px rgba(20, 6, 40, .45); }
+.flip .front { background: #fff; color: #1d1330; }
+.flip .back { background: #1d1330; color: #fff; transform: rotateY(180deg); }
+.flip .kicker { font-size: .78rem; text-transform: uppercase; letter-spacing: .12em; opacity: .7; }
+.flip .bigq { font-family: var(--font-head); font-size: clamp(1.35rem, 3.6vw, 2.05rem); line-height: 1.25; }
+.flip .btitle { font-family: var(--font-head); font-size: clamp(1.4rem, 3.4vw, 1.9rem); line-height: 1.2; }
+.flip .bsum { font-size: .95rem; line-height: 1.5; opacity: .9; display: -webkit-box; -webkit-line-clamp: 7; -webkit-box-orient: vertical; overflow: hidden; }
+.flip .tap { margin-top: auto; font-size: .82rem; opacity: .65; }
+.flip:focus-visible .face { outline: 3px solid #ffd166; outline-offset: 3px; }
+.deck-btns { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 20px; }
+.deck-btns button, .deck-btns a { font: 600 .95rem var(--font-ui); padding: 10px 18px; border-radius: 999px; border: 1px solid rgba(255,255,255,.6);
+  background: rgba(255,255,255,.14); color: #fff; cursor: pointer; text-decoration: none; }
+.deck-btns a { background: #fff; color: #1d1330; border-color: #fff; }
+.deck-btns button:hover { background: rgba(255,255,255,.28); }
+.deck .empty { color: #fff; text-align: center; }
+@media (prefers-reduced-motion: reduce) { .flip .inner { transition: none; } }
+
+/* ---------- 7. Map: cases plotted between the skills they feature ---------- */
+body[data-design="7"] {
+  --bg: #123a7a; --surface: #0f3168; --text: #f2f6ff; --muted: #b7c8ea; --line: rgba(255,255,255,.3); --accent: #ffd166; --on-accent: #10254d;
+  --head-bg: #0f3168; --head-text: #f2f6ff;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; --font-ui: ui-monospace, "Cascadia Mono", Consolas, "Courier New", monospace; --font-head: var(--font-ui);
+  --radius: 0; --head-weight: 600;
+  --Triggers: #ff9c94; --Uncertainty: #ffb46b; --Outward: #f0d35c; --Values: #7fe0a0; --Adaptive: #8fc0ff; --Process: #cdb3ff;
+  background-image: linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+body[data-design="7"] .intro, body[data-design="7"] details, body[data-design="7"] #mapinfo { border-style: dashed; }
+body[data-design="7"] .chip { background: transparent; }
+body[data-design="7"] .intro { margin-top: 24px; }
+.mapwrap { display: grid; grid-template-columns: minmax(0, 1.75fr) minmax(250px, 1fr); gap: 20px; align-items: start; }
+@media (max-width: 820px) { .mapwrap { grid-template-columns: 1fr; } }
+#map { overflow-x: auto; }
+#map svg { display: block; width: 100%; min-width: 620px; height: auto; font-family: var(--font-ui); }
+#map .ln { stroke: rgba(255,255,255,.22); stroke-width: 1; }
+#map .ln.on { stroke: var(--accent); stroke-width: 2.5; }
+#map .sk { cursor: pointer; }
+#map .sk text { fill: var(--text); font-size: 15px; }
+#map .sk circle { stroke: transparent; stroke-width: 5; }
+#map .sk[aria-pressed=true] circle { stroke: #fff; }
+#map .dot { cursor: pointer; }
+#map .dot circle { fill: #fff; stroke: #123a7a; stroke-width: 2; }
+#map .dot text { fill: #123a7a; font-size: 13px; font-weight: 700; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+#map .dot.sel circle { fill: var(--accent); }
+#map .dim { opacity: .18; }
+#map .dot:focus-visible circle, #map .sk:focus-visible circle { stroke: var(--accent); stroke-width: 4; }
+#map .dot:focus, #map .sk:focus { outline: none; }
+#mapinfo { background: var(--surface); border: 1px solid var(--line); padding: 18px; min-height: 220px; }
+#mapinfo h2 { margin: 4px 0 8px; font-size: 1.15rem; line-height: 1.3; }
+#mapinfo .q { font-style: italic; margin: 10px 0; }
+#mapinfo .open { display: inline-block; margin-top: 12px; font-family: var(--font-ui); font-weight: 700; }
 </style>
 </head>
 <body data-design="1">
@@ -156,6 +225,8 @@ body[data-design="5"] .card .q { font-size: .9rem; }
       <option value="3">3 · Night</option>
       <option value="4">4 · Poster</option>
       <option value="5">5 · Catalog</option>
+      <option value="6">6 · Deck</option>
+      <option value="7">7 · Map</option>
     </select>
   </label>
 </div></header>
@@ -179,7 +250,7 @@ const mins = c => Math.max(1, Math.round(c.words / 230)) + ' min read';
 
 function setDesign(n, save) {
   n = String(n);
-  if (!/^[1-5]$/.test(n)) n = '1';
+  if (!/^[1-7]$/.test(n)) n = '1';
   document.body.dataset.design = n;
   document.getElementById('design').value = n;
   if (!save) return;
@@ -191,8 +262,150 @@ function setDesign(n, save) {
   try { n = new URL(location.href).searchParams.get('design'); } catch (e) {}
   if (!n) { try { n = localStorage.getItem('design'); } catch (e) {} }
   setDesign(n || '1', false);
-  document.getElementById('design').onchange = e => setDesign(e.target.value, true);
+  document.getElementById('design').onchange = e => { setDesign(e.target.value, true); route(); };
 })();
+
+const bySkills = () => CASES.filter(c => [...state.skills].every(s => c.skills.includes(s)));
+const plain = h => { const d = document.createElement('div'); d.innerHTML = h; return d.textContent; };
+
+// Renders the standard home page, then swaps the search and card grid for a custom view.
+function customHome(html, onFilter) {
+  list();
+  ['.controls', '#count', '#grid'].forEach(s => app.querySelector(s).remove());
+  app.insertAdjacentHTML('afterbegin', html);
+  document.getElementById('skills').onclick = e => {
+    const s = e.target.dataset.s; if (!s) return;
+    state.skills.has(s) ? state.skills.delete(s) : state.skills.add(s);
+    e.target.setAttribute('aria-pressed', state.skills.has(s)); onFilter();
+  };
+}
+
+/* ----- 6. Deck ----- */
+const deck = { i: 0, order: null, flipped: false };
+function deckRows() {
+  const rows = bySkills();
+  return deck.order ? deck.order.map(n => rows.find(c => c.number === n)).filter(Boolean) : rows;
+}
+function deckView() {
+  customHome('<div class="deck" id="deck"></div>', () => { deck.i = 0; deck.flipped = false; drawDeck(); });
+  drawDeck();
+}
+function drawDeck() {
+  const el = document.getElementById('deck'); if (!el) return;
+  const rows = deckRows();
+  if (!rows.length) { el.innerHTML = '<p class="empty">No cases feature all of the selected skills. Clear one below.</p>'; return; }
+  deck.i = (deck.i + rows.length) % rows.length;
+  const c = rows[deck.i];
+  el.innerHTML = `
+    <div class="deck-count">Card ${deck.i + 1} of ${rows.length}</div>
+    <button class="flip ${deck.flipped ? 'on' : ''}" id="flip" aria-label="Flip the card">
+      <span class="inner">
+        <span class="face front">
+          <span class="kicker">The question</span>
+          <span class="bigq">${esc(c.compelling_question)}</span>
+          <span class="chips">${c.skills.map(chip).join('')}</span>
+          <span class="tap">Select the card to flip it</span>
+        </span>
+        <span class="face back">
+          <span class="kicker">Case ${c.number} · ${mins(c)}</span>
+          <span class="btitle">${esc(c.title)}</span>
+          <span class="bsum">${esc(plain(c.html.summary))}</span>
+          <span class="tap">${esc(c.topics.join(' · '))}</span>
+        </span>
+      </span>
+    </button>
+    <div class="deck-btns">
+      <button id="dprev">&larr; Previous</button>
+      <button id="dshuffle">Shuffle</button>
+      <a href="#/case/${c.number}">Read this case</a>
+      <button id="dnext">Next &rarr;</button>
+    </div>`;
+  document.getElementById('flip').onclick = () => { deck.flipped = !deck.flipped; document.getElementById('flip').classList.toggle('on', deck.flipped); };
+  document.getElementById('dprev').onclick = () => deckMove(-1);
+  document.getElementById('dnext').onclick = () => deckMove(1);
+  document.getElementById('dshuffle').onclick = () => {
+    deck.order = CASES.map(c => c.number).sort(() => Math.random() - .5);
+    deck.i = 0; deck.flipped = false; drawDeck();
+  };
+}
+function deckMove(d) { deck.i += d; deck.flipped = false; drawDeck(); }
+addEventListener('keydown', e => {
+  if (document.body.dataset.design !== '6' || !document.getElementById('deck') || /INPUT|SELECT|TEXTAREA/.test(e.target.tagName)) return;
+  if (e.key === 'ArrowRight') deckMove(1);
+  if (e.key === 'ArrowLeft') deckMove(-1);
+});
+
+/* ----- 7. Map ----- */
+const RING = ['Process', 'Adaptive', 'Values', 'Uncertainty', 'Triggers', 'Outward'];
+const MAPLABEL = {
+  Triggers: ['Strengths, vulnerabilities', 'and triggers'], Uncertainty: ['Uncertainty', 'and conflict'], Outward: ['Shift focus', 'outward'],
+  Values: ['Competing', 'values'], Adaptive: ['Technical', 'vs. adaptive'], Process: ['The process', 'challenge']
+};
+const MAPHELP = `<div class="num">How to read the map</div>
+  <p>Each numbered dot is a case, placed between the skills it features. Select a dot to see its question.</p>
+  <p>Select a skill to fade the cases that don't feature it.</p>`;
+let mapSel = null;
+function skillPos(s) {
+  const a = (-90 + RING.indexOf(s) * 60) * Math.PI / 180;
+  return { x: 450 + 215 * Math.cos(a), y: 320 + 215 * Math.sin(a), cos: Math.cos(a), sin: Math.sin(a) };
+}
+function mapView() {
+  customHome('<div class="mapwrap"><div id="map"></div><aside id="mapinfo"></aside></div>', drawMap);
+  drawMap();
+}
+function drawMap() {
+  const el = document.getElementById('map'); if (!el) return;
+  const groups = {};
+  CASES.forEach(c => { const k = [...c.skills].sort().join('+'); (groups[k] = groups[k] || []).push(c); });
+  const pts = {};
+  Object.values(groups).forEach(g => g.forEach((c, j) => {
+    const ps = c.skills.map(skillPos);
+    let x = ps.reduce((t, p) => t + p.x, 0) / ps.length, y = ps.reduce((t, p) => t + p.y, 0) / ps.length;
+    if (g.length > 1) { const r = 14 + 5 * g.length, a = 2 * Math.PI * j / g.length + Math.PI / 4; x += r * Math.cos(a); y += r * Math.sin(a); }
+    pts[c.number] = { x, y };
+  }));
+  const active = new Set(bySkills().map(c => c.number));
+  let lines = '', dots = '', nodes = '';
+  CASES.forEach(c => {
+    const p = pts[c.number], dim = active.has(c.number) ? '' : ' dim';
+    c.skills.forEach(s => { const k = skillPos(s);
+      lines += `<line class="ln${dim}" data-n="${c.number}" x1="${p.x.toFixed(1)}" y1="${p.y.toFixed(1)}" x2="${k.x.toFixed(1)}" y2="${k.y.toFixed(1)}"/>`; });
+    dots += `<g class="dot${dim}" data-n="${c.number}" tabindex="0" role="button" aria-label="Case ${c.number}: ${esc(c.title)}">
+      <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="12"/><text x="${p.x.toFixed(1)}" y="${p.y.toFixed(1)}">${c.number}</text></g>`;
+  });
+  RING.forEach(s => {
+    const k = skillPos(s), anchor = k.cos > .3 ? 'start' : k.cos < -.3 ? 'end' : 'middle';
+    const lx = k.x + 40 * k.cos, ly = k.y + 40 * k.sin + (k.sin < -.5 ? -14 : k.sin > .5 ? 12 : -4);
+    nodes += `<g class="sk" data-s="${s}" tabindex="0" role="button" aria-pressed="${state.skills.has(s)}" aria-label="${esc(SKILLS[s])}">
+      <circle cx="${k.x.toFixed(1)}" cy="${k.y.toFixed(1)}" r="24" fill="var(--${s})"/>
+      <text text-anchor="${anchor}"><tspan x="${lx.toFixed(1)}" y="${ly.toFixed(1)}">${MAPLABEL[s][0]}</tspan><tspan x="${lx.toFixed(1)}" dy="18">${MAPLABEL[s][1]}</tspan></text></g>`;
+  });
+  el.innerHTML = `<svg viewBox="0 0 900 640" role="group" aria-label="Map of cases by leadership skill">${lines}${nodes}${dots}</svg>`;
+  const pick = t => {
+    const d = t.closest('.dot'), k = t.closest('.sk');
+    if (d) mapSelect(+d.dataset.n);
+    else if (k) { const s = k.dataset.s; state.skills.has(s) ? state.skills.delete(s) : state.skills.add(s);
+      const b = document.querySelector(`#skills button[data-s=${s}]`); if (b) b.setAttribute('aria-pressed', state.skills.has(s)); drawMap(); }
+  };
+  el.onclick = e => pick(e.target);
+  el.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(e.target); } };
+  el.onmouseover = e => { const d = e.target.closest('.dot'); if (d) mapSelect(+d.dataset.n); };
+  mapSelect(mapSel);
+}
+function mapSelect(n) {
+  const c = CASES.find(x => x.number === n), info = document.getElementById('mapinfo');
+  mapSel = c ? n : null;
+  document.querySelectorAll('#map .ln').forEach(l => l.classList.toggle('on', +l.dataset.n === mapSel));
+  document.querySelectorAll('#map .dot').forEach(d => d.classList.toggle('sel', +d.dataset.n === mapSel));
+  info.innerHTML = c ? `<div class="num">Case ${c.number} · ${mins(c)}</div><h2>${esc(c.title)}</h2>
+    <div class="chips">${c.skills.map(chip).join('')}</div><p class="q">${esc(c.compelling_question)}</p>
+    <div class="meta">${esc(c.topics.join(' · '))}</div><a class="open" href="#/case/${c.number}">Read this case &rarr;</a>` : MAPHELP;
+}
+
+function home() {
+  const d = document.body.dataset.design;
+  d === '6' ? deckView() : d === '7' ? mapView() : list();
+}
 
 function list() {
   app.innerHTML = `
@@ -250,7 +463,7 @@ function cards() {
 
 function show(n) {
   const i = CASES.findIndex(c => c.number === n), c = CASES[i];
-  if (!c) return list();
+  if (!c) return home();
   const prev = CASES[i - 1], next = CASES[i + 1];
   app.innerHTML = `<article>
     <a class="back" href="#/">&larr; All cases</a>
@@ -273,7 +486,7 @@ function show(n) {
 
 function route() {
   const m = location.hash.match(/^#\/case\/(\d+)/);
-  m ? show(+m[1]) : list();
+  m ? show(+m[1]) : home();
 }
 addEventListener('hashchange', route);
 route();
