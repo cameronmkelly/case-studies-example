@@ -16,6 +16,8 @@ body {
   margin: 0; background: var(--bg); color: var(--text); font: 17px/1.6 var(--font-body);
 }
 * { box-sizing: border-box; }
+h1, h2, h3, summary, .q, .bigq, .btitle { text-wrap: balance; }
+p, li, td, .skill span, .meta, small { text-wrap: pretty; }
 .ui, button, input, select, .chip, .meta, .num, nav, .sub, .banner, .picker, .hint, .count, .back, summary { font-family: var(--font-ui); }
 h1, h2 { font-family: var(--font-head); font-weight: var(--head-weight); }
 .wrap { max-width: 1060px; margin: 0 auto; padding: 0 16px; }
@@ -110,9 +112,8 @@ details.intro > summary { font-family: var(--font-head); font-weight: var(--head
 .intro .comp strong, .intro .steps strong { display: block; }
 .intro .comp li, .intro .steps li { margin-bottom: 12px; }
 .intro .row li:last-child { margin-bottom: 0; }
-.intro .steps li { counter-increment: st; position: relative; padding-left: 30px; }
-.intro .steps li::before { content: counter(st); position: absolute; left: 0; top: .18em; width: 20px; height: 20px; border: 1px solid currentColor; border-radius: 50%;
-  font: 600 .72rem/18px var(--font-ui); text-align: center; }
+.intro .steps li { counter-increment: st; }
+.intro .steps strong::before { content: counter(st) ". "; }
 .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px; }
 .skill { --c: var(--muted); display: grid; grid-template-columns: 16px minmax(0, 1fr); column-gap: 10px; align-content: start; text-align: left; font: inherit; cursor: pointer;
   color: var(--text); background: var(--surface); border: 1px solid var(--line); border-left: 6px solid var(--c); border-radius: var(--radius); padding: 10px 12px; }
