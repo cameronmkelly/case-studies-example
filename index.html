@@ -520,11 +520,6 @@ function introHTML() {
       </ul>
     </div>
     <div class="row">
-      <h3>Six leadership skills to look for<small>Each case is tagged with the skills that stand out in it. Select one or more to show only those cases.</small></h3>
-      <div class="skills" id="skills">${Object.keys(SKILLS).map(s =>
-        `<button class="skill" style="--c:var(--${s})" data-s="${s}" aria-pressed="${state.skills.has(s)}"><b>${esc(SKILLS[s])}</b><span>${esc(DEFS[s])}</span></button>`).join('')}</div>
-    </div>
-    <div class="row">
       <h3>Working through a case</h3>
       <ol class="steps">
         <li><strong>Start with the question.</strong> Read the compelling question and the summary to see what the case is about.</li>
@@ -532,6 +527,11 @@ function introHTML() {
         <li><strong>Look for the skills.</strong> Find where the tagged skills show up, and whether any others do.</li>
         <li><strong>Discuss the questions.</strong> Each case ends with questions for discussion. Consider how the same events looked to each person in it.</li>
       </ol>
+    </div>
+    <div class="row">
+      <h3>Six leadership skills to look for<small>Each case is tagged with the skills that stand out in it. Select one or more to show only those cases.</small></h3>
+      <div class="skills" id="skills">${Object.keys(SKILLS).map(s =>
+        `<button class="skill" style="--c:var(--${s})" data-s="${s}" aria-pressed="${state.skills.has(s)}"><b>${esc(SKILLS[s])}</b><span>${esc(DEFS[s])}</span></button>`).join('')}</div>
     </div>
   </details>`;
 }
