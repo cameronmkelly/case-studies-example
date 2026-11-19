@@ -61,12 +61,35 @@ a { color: var(--accent); }
 .empty { color: var(--muted); padding: 32px 0; }
 @media print { .sub, .banner, nav, .back, .controls, .picker { display: none; } details { border: 0; padding: 0; } }
 
+.top { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.time { font-family: var(--font-ui); font-size: .76rem; font-weight: 600; color: inherit; border: 1px solid currentColor; border-radius: 999px; padding: 1px 9px; white-space: nowrap; opacity: .85; }
+details.intro { margin: 0 0 20px; padding: 16px 20px; }
+details.intro > summary { font-family: var(--font-head); font-weight: var(--head-weight); font-size: 1.25rem; }
+.intro .lead { font-size: 1.05rem; margin: 12px 0 4px; max-width: 70ch; }
+.intro h3 { font-family: var(--font-ui); font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 22px 0 8px; }
+.intro .comp { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; list-style: none; padding: 0; margin: 0; }
+.intro .comp li { border-top: 3px solid var(--accent); padding-top: 8px; font-size: .93rem; line-height: 1.5; }
+.intro .comp strong, .skill b { display: block; font-family: var(--font-ui); font-size: .95rem; margin-bottom: 2px; }
+.skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px; }
+.skill { --c: var(--muted); display: block; text-align: left; font: inherit; cursor: pointer; color: var(--text); background: var(--surface);
+  border: 1px solid var(--line); border-left: 6px solid var(--c); border-radius: var(--radius); padding: 10px 12px; }
+.skill span { display: block; font-family: var(--font-ui); font-size: .84rem; line-height: 1.45; color: var(--muted); }
+.skill:hover { border-color: var(--c); }
+.skill[aria-pressed=true] { border-color: var(--c); background: color-mix(in srgb, var(--c) 16%, var(--surface)); box-shadow: inset 0 0 0 1px var(--c); }
+.skill[aria-pressed=true] b::after { content: "  \2713"; color: var(--c); }
+.intro .steps { margin: 0; padding-left: 22px; font-size: .95rem; }
+.intro .steps li { margin-bottom: 4px; }
+.intro .hint { margin: 0 0 10px; }
+
 /* ---------- 1. Journal: white page, serif, ruled list ---------- */
 body[data-design="1"] header { border-bottom: 3px double var(--text); }
 body[data-design="1"] header h1 { font-size: 1.9rem; font-weight: 400; letter-spacing: .01em; }
+body[data-design="1"] details.intro { padding: 16px 0; max-width: none; }
 body[data-design="1"] .intro { border: 0; border-top: 1px solid var(--text); border-bottom: 1px solid var(--text); border-radius: 0; padding: 16px 0; }
 body[data-design="1"] .grid { grid-template-columns: 1fr; gap: 0; max-width: 820px; }
-body[data-design="1"] .card { display: grid; grid-template-columns: 64px 1fr; column-gap: 12px; row-gap: 6px; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; padding: 18px 0; }
+body[data-design="1"] .card .top { grid-column: 1; grid-row: 1 / span 4; display: block; }
+body[data-design="1"] .card .time { display: block; border: 0; padding: 0; margin-top: 8px; font-weight: 400; }
+body[data-design="1"] .card { display: grid; grid-template-columns: 92px 1fr; column-gap: 12px; row-gap: 6px; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; padding: 18px 0; }
 body[data-design="1"] .card > * { grid-column: 2; }
 body[data-design="1"] .card .num { grid-column: 1; grid-row: 1 / span 4; font-family: var(--font-body); font-size: 1.7rem; color: var(--accent); line-height: 1; }
 body[data-design="1"] .card .num span { display: none; }
@@ -114,6 +137,8 @@ body[data-design="4"] .card, body[data-design="4"] .intro, body[data-design="4"]
 body[data-design="4"] .card:hover { box-shadow: 6px 6px 0 #000; transform: translate(-2px, -2px); }
 body[data-design="4"] .card h2 { text-transform: uppercase; font-size: 1.05rem; }
 body[data-design="4"] .card .q, body[data-design="4"] article .q { font-style: normal; }
+body[data-design="4"] .time { border: 2px solid #000; border-radius: 0; background: #ffd400; color: #000; opacity: 1; }
+body[data-design="4"] .skill { border: 2px solid #000; border-left: 8px solid var(--c); }
 body[data-design="4"] .chip { border-radius: 0; background: var(--c); color: #fff; border-color: var(--c); }
 body[data-design="4"] button.chip { background: #fff; color: var(--c); border-width: 2px; }
 body[data-design="4"] button.chip[aria-pressed=true] { background: var(--c); color: #fff; }
@@ -134,7 +159,9 @@ body[data-design="5"] .card:last-child { border-bottom: 0; }
 body[data-design="5"] .card:hover { background: #f4f8f4; }
 body[data-design="5"] .card .q { font-size: .9rem; }
 @media (min-width: 860px) {
-  body[data-design="5"] .card { display: grid; grid-template-columns: 70px minmax(0, 1.5fr) minmax(0, 1fr) 190px; column-gap: 18px; row-gap: 4px; align-items: start; }
+  body[data-design="5"] .card .top { grid-column: 1; grid-row: 1 / span 2; display: block; }
+  body[data-design="5"] .card .time { display: inline-block; margin-top: 6px; }
+  body[data-design="5"] .card { display: grid; grid-template-columns: 104px minmax(0, 1.5fr) minmax(0, 1fr) 190px; column-gap: 18px; row-gap: 4px; align-items: start; }
   body[data-design="5"] .card .num { grid-column: 1; grid-row: 1 / span 2; }
   body[data-design="5"] .card h2 { grid-column: 2; }
   body[data-design="5"] .card .q { grid-column: 2; grid-row: 2; margin: 0; }
@@ -274,9 +301,9 @@ function customHome(html, onFilter) {
   ['.controls', '#count', '#grid'].forEach(s => app.querySelector(s).remove());
   app.insertAdjacentHTML('afterbegin', html);
   document.getElementById('skills').onclick = e => {
-    const s = e.target.dataset.s; if (!s) return;
+    const b = e.target.closest('[data-s]'); if (!b) return; const s = b.dataset.s;
     state.skills.has(s) ? state.skills.delete(s) : state.skills.add(s);
-    e.target.setAttribute('aria-pressed', state.skills.has(s)); onFilter();
+    b.setAttribute('aria-pressed', state.skills.has(s)); onFilter();
   };
 }
 
@@ -301,13 +328,13 @@ function drawDeck() {
     <button class="flip ${deck.flipped ? 'on' : ''}" id="flip" aria-label="Flip the card">
       <span class="inner">
         <span class="face front">
-          <span class="kicker">The question</span>
+          <span class="top"><span class="kicker">The question</span><span class="time">${mins(c)}</span></span>
           <span class="bigq">${esc(c.compelling_question)}</span>
           <span class="chips">${c.skills.map(chip).join('')}</span>
           <span class="tap">Select the card to flip it</span>
         </span>
         <span class="face back">
-          <span class="kicker">Case ${c.number} · ${mins(c)}</span>
+          <span class="top"><span class="kicker">Case ${c.number}</span><span class="time">${mins(c)}</span></span>
           <span class="btitle">${esc(c.title)}</span>
           <span class="bsum">${esc(plain(c.html.summary))}</span>
           <span class="tap">${esc(c.topics.join(' · '))}</span>
@@ -385,7 +412,7 @@ function drawMap() {
     const d = t.closest('.dot'), k = t.closest('.sk');
     if (d) mapSelect(+d.dataset.n);
     else if (k) { const s = k.dataset.s; state.skills.has(s) ? state.skills.delete(s) : state.skills.add(s);
-      const b = document.querySelector(`#skills button[data-s=${s}]`); if (b) b.setAttribute('aria-pressed', state.skills.has(s)); drawMap(); }
+      const b = document.querySelector(`#skills [data-s=${s}]`); if (b) b.setAttribute('aria-pressed', state.skills.has(s)); drawMap(); }
   };
   el.onclick = e => pick(e.target);
   el.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(e.target); } };
@@ -397,7 +424,7 @@ function mapSelect(n) {
   mapSel = c ? n : null;
   document.querySelectorAll('#map .ln').forEach(l => l.classList.toggle('on', +l.dataset.n === mapSel));
   document.querySelectorAll('#map .dot').forEach(d => d.classList.toggle('sel', +d.dataset.n === mapSel));
-  info.innerHTML = c ? `<div class="num">Case ${c.number} · ${mins(c)}</div><h2>${esc(c.title)}</h2>
+  info.innerHTML = c ? `<div class="top"><div class="num">Case ${c.number}</div><div class="time">${mins(c)}</div></div><h2>${esc(c.title)}</h2>
     <div class="chips">${c.skills.map(chip).join('')}</div><p class="q">${esc(c.compelling_question)}</p>
     <div class="meta">${esc(c.topics.join(' · '))}</div><a class="open" href="#/case/${c.number}">Read this case &rarr;</a>` : MAPHELP;
 }
@@ -407,22 +434,41 @@ function home() {
   d === '6' ? deckView() : d === '7' ? mapView() : list();
 }
 
+const DEFS = {
+  Triggers: 'What you are good at, where you are exposed, and what knocks you off balance.',
+  Uncertainty: 'Making decisions without all the information, and treating disagreement as a problem to solve instead of a fight to avoid.',
+  Outward: 'Moving from doing everything yourself to guiding others, and looking past today\'s problem to how it shapes tomorrow.',
+  Values: 'Two good things pull in opposite directions, and you decide which one wins.',
+  Adaptive: 'A technical problem has a known fix that an expert or a tool can apply. An adaptive problem has no ready fix, because the people involved have to change how they think, decide or work.',
+  Process: 'The content challenge is what needs to get done. The process challenge is the human reasons it stalls, like resistance, missing resources or things nobody says out loud.'
+};
+function introHTML() {
+  return `<details class="intro" open>
+    <summary>Directions</summary>
+    <p class="lead">These are real leadership situations written by students, with names and details changed. As you read each case study, consider the concept of Think Like a Leader.</p>
+    <h3>When thinking like a leader, a leader should be able to</h3>
+    <ul class="comp">
+      <li><strong>Plan and manage risk</strong>Develop comprehensive project plans, monitor the plans, identify areas of risk and deal with problems using appropriate strategies.</li>
+      <li><strong>Make the key decisions</strong>Identify the significant and key decisions that need to be made, and gather the necessary resources or people to make the decision.</li>
+      <li><strong>Know your own leadership</strong>Identify and describe personal leadership style, characteristics, strengths and philosophy.</li>
+    </ul>
+    <h3>Six leadership skills to look for</h3>
+    <div class="hint">Each case is tagged with the skills that stand out in it. Select one or more to show only those cases.</div>
+    <div class="skills" id="skills">${Object.keys(SKILLS).map(s =>
+      `<button class="skill" style="--c:var(--${s})" data-s="${s}" aria-pressed="${state.skills.has(s)}"><b>${esc(SKILLS[s])}</b><span>${esc(DEFS[s])}</span></button>`).join('')}</div>
+    <h3>Working through a case</h3>
+    <ol class="steps">
+      <li><strong>Start with the question.</strong> Read the compelling question and the summary to see what the case is about.</li>
+      <li><strong>Read the case once through.</strong> Note each decision, who made it, and what they knew at the time.</li>
+      <li><strong>Look for the skills.</strong> Find where the tagged skills show up, and whether any others do.</li>
+      <li><strong>Discuss the questions.</strong> Each case ends with questions for discussion. Consider how the same events looked to each person in it.</li>
+    </ol>
+  </details>`;
+}
+
 function list() {
   app.innerHTML = `
-    <section class="intro">
-      <h2>Directions</h2>
-      <p>As you read these case studies, consider the concept of Think Like a Leader. When doing this, a leader should be able to:</p>
-      <ul>
-        <li>Develop comprehensive project plans, monitor the plans, identify areas of risk and deal with problems using appropriate strategies</li>
-        <li>Identify the significant and key decisions that need to be made, gather the necessary resources or people to make the decision</li>
-        <li>Identify and describe personal leadership style, characteristics, strengths, and philosophy</li>
-      </ul>
-      <p>As you read, look for evidence of these key leadership components. Also consider if you see evidence of these key leadership skills:</p>
-      <div class="chips" id="skills">${Object.keys(SKILLS).map(s =>
-        `<button class="chip" style="--c:var(--${s})" data-s="${s}" aria-pressed="${state.skills.has(s)}">${esc(SKILLS[s])}</button>`).join('')}</div>
-      <div class="hint">Select one or more skills to show only the cases where they stand out.</div>
-      <p>There will be questions following each case for further discussion.</p>
-    </section>
+    ${introHTML()}
     <div class="controls">
       <input type="search" id="q" placeholder="Search titles, topics and questions" aria-label="Search cases" value="${esc(state.q)}">
       <select id="sort" aria-label="Sort cases">
@@ -434,12 +480,15 @@ function list() {
     <div class="count" id="count"></div>
     <div class="grid" id="grid"></div>`;
   document.getElementById('sort').value = state.sort;
+  const dir = app.querySelector('details.intro');
+  try { dir.open = localStorage.getItem('directions') !== 'closed'; } catch (e) {}
+  dir.ontoggle = () => { try { localStorage.setItem('directions', dir.open ? 'open' : 'closed'); } catch (e) {} };
   document.getElementById('q').oninput = e => { state.q = e.target.value; cards(); };
   document.getElementById('sort').onchange = e => { state.sort = e.target.value; cards(); };
   document.getElementById('skills').onclick = e => {
-    const s = e.target.dataset.s; if (!s) return;
+    const b = e.target.closest('[data-s]'); if (!b) return; const s = b.dataset.s;
     state.skills.has(s) ? state.skills.delete(s) : state.skills.add(s);
-    e.target.setAttribute('aria-pressed', state.skills.has(s)); cards();
+    b.setAttribute('aria-pressed', state.skills.has(s)); cards();
   };
   cards();
 }
@@ -453,11 +502,11 @@ function cards() {
   document.getElementById('count').textContent = `${rows.length} of ${CASES.length} cases`;
   document.getElementById('grid').innerHTML = rows.length ? rows.map(c => `
     <a class="card" href="#/case/${c.number}">
-      <div class="num"><span>Case </span>${c.number}</div>
+      <div class="top"><div class="num"><span>Case </span>${c.number}</div><div class="time">${mins(c)}</div></div>
       <h2>${esc(c.title)}</h2>
       <p class="q">${esc(c.compelling_question)}</p>
       <div class="chips">${c.skills.map(chip).join('')}</div>
-      <div class="meta">${esc(c.topics.join(' · '))} · ${mins(c)}</div>
+      <div class="meta">${esc(c.topics.join(' · '))}</div>
     </a>`).join('') : '<p class="empty ui">No cases match. Clear a filter or the search box.</p>';
 }
 
@@ -467,7 +516,7 @@ function show(n) {
   const prev = CASES[i - 1], next = CASES[i + 1];
   app.innerHTML = `<article>
     <a class="back" href="#/">&larr; All cases</a>
-    <div class="meta" style="margin-top:18px">Case ${c.number} · ${esc(c.section)} · Cohort ${c.cohort} · ${mins(c)}</div>
+    <div class="top" style="margin-top:18px"><div class="meta">Case ${c.number} · ${esc(c.section)} · Cohort ${c.cohort}</div><div class="time">${mins(c)}</div></div>
     <h1>${esc(c.title)}</h1>
     <div class="chips">${c.skills.map(chip).join('')}</div>
     <p class="q">${esc(c.compelling_question)}</p>
