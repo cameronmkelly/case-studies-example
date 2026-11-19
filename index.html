@@ -83,21 +83,27 @@ a { color: var(--accent); }
 .time { font-family: var(--font-ui); font-size: .76rem; font-weight: 600; color: inherit; border: 1px solid currentColor; border-radius: 999px; padding: 1px 9px; white-space: nowrap; opacity: .85; }
 details.intro { margin: 0 0 20px; padding: 16px 20px; }
 details.intro > summary { font-family: var(--font-head); font-weight: var(--head-weight); font-size: 1.25rem; }
-.intro .lead { font-size: 1.05rem; margin: 12px 0 4px; max-width: 70ch; }
-.intro h3 { font-family: var(--font-ui); font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 22px 0 8px; }
-.intro .comp { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; list-style: none; padding: 0; margin: 0; }
-.intro .comp li { border-top: 3px solid var(--accent); padding-top: 8px; font-size: .93rem; line-height: 1.5; }
-.intro .comp strong, .skill b { display: block; font-family: var(--font-ui); font-size: .95rem; margin-bottom: 2px; }
-.skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px; }
-.skill { --c: var(--muted); display: block; text-align: left; font: inherit; cursor: pointer; color: var(--text); background: var(--surface);
-  border: 1px solid var(--line); border-left: 6px solid var(--c); border-radius: var(--radius); padding: 10px 12px; }
-.skill span { display: block; font-family: var(--font-ui); font-size: .84rem; line-height: 1.45; color: var(--muted); }
+.intro .lead { font-size: 1.05rem; margin: 12px 0 16px; }
+.intro .row { display: grid; grid-template-columns: 210px minmax(0, 1fr); column-gap: 36px; row-gap: 10px; padding: 18px 0; border-top: 1px solid var(--line); }
+.intro .row:last-child { padding-bottom: 4px; }
+.intro h3 { font-family: var(--font-head); font-weight: var(--head-weight); font-size: 1.05rem; line-height: 1.3; margin: 0; color: var(--text); }
+.intro h3 small { display: block; font-family: var(--font-ui); font-weight: 400; font-size: .82rem; line-height: 1.45; color: var(--muted); margin-top: 8px; }
+.intro .comp, .intro .steps { margin: 0; padding: 0; list-style: none; counter-reset: st; }
+.intro .comp li, .intro .steps li { margin: 0 0 8px; font-size: .97rem; line-height: 1.5; }
+.intro .row li:last-child { margin-bottom: 0; }
+.intro .steps li { counter-increment: st; position: relative; padding-left: 30px; }
+.intro .steps li::before { content: counter(st); position: absolute; left: 0; top: .18em; width: 20px; height: 20px; border: 1px solid currentColor; border-radius: 50%;
+  font: 600 .72rem/18px var(--font-ui); text-align: center; }
+.skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px; }
+.skill { --c: var(--muted); display: grid; grid-template-columns: 16px minmax(0, 1fr); column-gap: 10px; align-content: start; text-align: left; font: inherit; cursor: pointer;
+  color: var(--text); background: var(--surface); border: 1px solid var(--line); border-left: 6px solid var(--c); border-radius: var(--radius); padding: 10px 12px; }
+.skill::before { content: ""; grid-row: 1 / span 2; width: 16px; height: 16px; margin-top: 4px; border: 2px solid var(--c); border-radius: 3px; box-sizing: border-box; }
+.skill b { grid-column: 2; font-size: .97rem; line-height: 1.35; }
+.skill span { grid-column: 2; font-size: .86rem; line-height: 1.45; color: var(--muted); margin-top: 2px; }
 .skill:hover { border-color: var(--c); }
-.skill[aria-pressed=true] { border-color: var(--c); background: color-mix(in srgb, var(--c) 16%, var(--surface)); box-shadow: inset 0 0 0 1px var(--c); }
-.skill[aria-pressed=true] b::after { content: "  \2713"; color: var(--c); }
-.intro .steps { margin: 0; padding-left: 22px; font-size: .95rem; }
-.intro .steps li { margin-bottom: 4px; }
-.intro .hint { margin: 0 0 10px; }
+.skill[aria-pressed=true] { border-color: var(--c); background: color-mix(in srgb, var(--c) 14%, var(--surface)); }
+.skill[aria-pressed=true]::before { background: var(--c); box-shadow: inset 0 0 0 2px var(--surface); }
+@media (max-width: 760px) { .intro .row { grid-template-columns: 1fr; } }
 
 /* ---------- 1. Journal: white page, serif, ruled list ---------- */
 body[data-design="1"] header { border-bottom: 3px double var(--text); }
@@ -464,23 +470,28 @@ function introHTML() {
   return `<details class="intro" open>
     <summary>Directions</summary>
     <p class="lead">These are real leadership situations written by students, with names and details changed. As you read each case study, consider the concept of Think Like a Leader.</p>
-    <h3>When thinking like a leader, a leader should be able to</h3>
-    <ul class="comp">
-      <li><strong>Plan and manage risk</strong>Develop comprehensive project plans, monitor the plans, identify areas of risk and deal with problems using appropriate strategies.</li>
-      <li><strong>Make the key decisions</strong>Identify the significant and key decisions that need to be made, and gather the necessary resources or people to make the decision.</li>
-      <li><strong>Know your own leadership</strong>Identify and describe personal leadership style, characteristics, strengths and philosophy.</li>
-    </ul>
-    <h3>Six leadership skills to look for</h3>
-    <div class="hint">Each case is tagged with the skills that stand out in it. Select one or more to show only those cases.</div>
-    <div class="skills" id="skills">${Object.keys(SKILLS).map(s =>
-      `<button class="skill" style="--c:var(--${s})" data-s="${s}" aria-pressed="${state.skills.has(s)}"><b>${esc(SKILLS[s])}</b><span>${esc(DEFS[s])}</span></button>`).join('')}</div>
-    <h3>Working through a case</h3>
-    <ol class="steps">
-      <li><strong>Start with the question.</strong> Read the compelling question and the summary to see what the case is about.</li>
-      <li><strong>Read the case once through.</strong> Note each decision, who made it, and what they knew at the time.</li>
-      <li><strong>Look for the skills.</strong> Find where the tagged skills show up, and whether any others do.</li>
-      <li><strong>Discuss the questions.</strong> Each case ends with questions for discussion. Consider how the same events looked to each person in it.</li>
-    </ol>
+    <div class="row">
+      <h3>A leader should be able to</h3>
+      <ul class="comp">
+        <li><strong>Plan and manage risk.</strong> Develop comprehensive project plans, monitor the plans, identify areas of risk and deal with problems using appropriate strategies.</li>
+        <li><strong>Make the key decisions.</strong> Identify the significant and key decisions that need to be made, and gather the necessary resources or people to make the decision.</li>
+        <li><strong>Know your own leadership.</strong> Identify and describe personal leadership style, characteristics, strengths and philosophy.</li>
+      </ul>
+    </div>
+    <div class="row">
+      <h3>Six leadership skills to look for<small>Each case is tagged with the skills that stand out in it. Select one or more to show only those cases.</small></h3>
+      <div class="skills" id="skills">${Object.keys(SKILLS).map(s =>
+        `<button class="skill" style="--c:var(--${s})" data-s="${s}" aria-pressed="${state.skills.has(s)}"><b>${esc(SKILLS[s])}</b><span>${esc(DEFS[s])}</span></button>`).join('')}</div>
+    </div>
+    <div class="row">
+      <h3>Working through a case</h3>
+      <ol class="steps">
+        <li><strong>Start with the question.</strong> Read the compelling question and the summary to see what the case is about.</li>
+        <li><strong>Read the case once through.</strong> Note each decision, who made it, and what they knew at the time.</li>
+        <li><strong>Look for the skills.</strong> Find where the tagged skills show up, and whether any others do.</li>
+        <li><strong>Discuss the questions.</strong> Each case ends with questions for discussion. Consider how the same events looked to each person in it.</li>
+      </ol>
+    </div>
   </details>`;
 }
 
