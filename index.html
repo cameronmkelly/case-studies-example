@@ -230,33 +230,29 @@ body[data-design="6"] .intro { margin-top: 28px; border: 0; }
 @media (prefers-reduced-motion: reduce) { .flip .inner { transition: none; } }
 
 /* ---------- 7. Map: cases plotted between the skills they feature ---------- */
-body[data-design="7"] {
-  --bg: #123a7a; --surface: #0f3168; --text: #f2f6ff; --muted: #b7c8ea; --line: rgba(255,255,255,.3); --accent: #ffd166; --on-accent: #10254d;
-  --head-bg: #0f3168; --head-text: #f2f6ff;
-  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; --font-ui: ui-monospace, "Cascadia Mono", Consolas, "Courier New", monospace; --font-head: var(--font-ui);
-  --radius: 0; --head-weight: 600;
-  --Triggers: #ff9c94; --Uncertainty: #ffb46b; --Outward: #f0d35c; --Values: #7fe0a0; --Adaptive: #8fc0ff; --Process: #cdb3ff;
-  background-image: linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
-  background-size: 28px 28px;
-}
-body[data-design="7"] .intro, body[data-design="7"] details, body[data-design="7"] #mapinfo { border-style: dashed; }
-body[data-design="7"] .chip { background: transparent; }
-body[data-design="7"] .intro { margin-top: 24px; }
 .mapwrap { display: grid; grid-template-columns: minmax(0, 1.75fr) minmax(250px, 1fr); gap: 20px; align-items: start; }
 @media (max-width: 820px) { .mapwrap { grid-template-columns: 1fr; } }
 #map { overflow-x: auto; }
 #map svg { display: block; width: 100%; min-width: 620px; height: auto; font-family: var(--font-ui); }
-#map .ln { stroke: rgba(255,255,255,.22); stroke-width: 1; }
+#map .ln { stroke: color-mix(in srgb, var(--text) 22%, transparent); stroke-width: 1; }
 #map .ln.on { stroke: var(--accent); stroke-width: 2.5; }
 #map .sk { cursor: pointer; }
 #map .sk text { fill: var(--text); font-size: 15px; }
 #map .sk circle { stroke: transparent; stroke-width: 5; }
-#map .sk[aria-pressed=true] circle { stroke: #fff; }
+#map .sk[aria-pressed=true] circle { stroke: var(--text); }
 #map .dot { cursor: pointer; }
-#map .dot circle { fill: #fff; stroke: #123a7a; stroke-width: 2; }
-#map .dot text { fill: #123a7a; font-size: 13px; font-weight: 700; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+#map .dot circle { fill: var(--surface); stroke: var(--text); stroke-width: 1.5; }
+#map .dot text { fill: var(--text); font-size: 13px; font-weight: 700; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
 #map .dot.sel circle { fill: var(--accent); }
+#map .dot.sel text { fill: var(--on-accent); }
 #map .dim { opacity: .18; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; background: var(--surface); }
+.seg button { font: 600 .9rem var(--font-ui); padding: 8px 18px; border: 0; background: none; color: var(--text); cursor: pointer; }
+.seg button[aria-pressed=true] { background: var(--accent); color: var(--on-accent); }
+body[data-design="2"] .mapwrap { margin-top: 16px; }
+body[data-design="2"] #map, body[data-design="2"] #mapinfo { background: var(--surface); border: 0; border-radius: var(--radius); box-shadow: 0 1px 2px rgba(20,24,40,.06), 0 6px 18px rgba(20,24,40,.06); }
+body[data-design="2"] #map { padding: 8px; }
+body[data-design="2"] #mapinfo { padding: 22px; }
 #map .dot:focus-visible circle, #map .sk:focus-visible circle { stroke: var(--accent); stroke-width: 4; }
 #map .dot:focus, #map .sk:focus { outline: none; }
 #mapinfo { background: var(--surface); border: 1px solid var(--line); padding: 18px; min-height: 220px; }
@@ -279,7 +275,6 @@ body[data-design="7"] .intro { margin-top: 24px; }
       <option value="4">4 · Poster</option>
       <option value="5">5 · Catalog</option>
       <option value="6">6 · Deck</option>
-      <option value="7">7 · Map</option>
     </select>
   </label>
 </div></header>
@@ -295,7 +290,7 @@ const SKILLS = {
   Adaptive: 'Distinguish between technical and adaptive',
   Process: 'Understand the process challenge'
 };
-const state = { skills: new Set(), q: '', sort: 'number' };
+const state = { skills: new Set(), q: '', sort: 'number', view: 'cards' };
 const app = document.getElementById('app');
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const chip = s => `<span class="chip" style="--c:var(--${s})">${esc(SKILLS[s] || s)}</span>`;
@@ -303,7 +298,8 @@ const mins = c => Math.max(1, Math.ceil(c.words / 230)) + ' min read';
 
 function setDesign(n, save) {
   n = String(n);
-  if (!/^[1-7]$/.test(n)) n = '1';
+  if (n === '7') { n = '2'; state.view = 'map'; }
+  if (!/^[1-6]$/.test(n)) n = '1';
   document.body.dataset.design = n;
   document.getElementById('design').value = n;
   if (!save) return;
@@ -314,6 +310,7 @@ function setDesign(n, save) {
   let n = null;
   try { n = new URL(location.href).searchParams.get('design'); } catch (e) {}
   if (!n) { try { n = localStorage.getItem('design'); } catch (e) {} }
+  try { if (new URL(location.href).searchParams.get('view') === 'map') state.view = 'map'; } catch (e) {}
   setDesign(n || '1', false);
   document.getElementById('design').onchange = e => { setDesign(e.target.value, true); route(); };
 })();
@@ -455,9 +452,33 @@ function mapSelect(n) {
     <div class="meta">${esc(c.topics.join(' · '))}</div><a class="open" href="#/case/${c.number}">Read this case &rarr;</a>` : MAPHELP;
 }
 
+// Modern: the standard home page with a Cards / Map switch.
+function modernView() {
+  list();
+  const controls = app.querySelector('.controls');
+  controls.insertAdjacentHTML('afterbegin', `<div class="seg" role="group" aria-label="View">
+    <button data-v="cards" aria-pressed="${state.view !== 'map'}">Cards</button>
+    <button data-v="map" aria-pressed="${state.view === 'map'}">Map</button></div>`);
+  controls.querySelector('.seg').onclick = e => {
+    const v = e.target.dataset.v; if (!v) return;
+    state.view = v;
+    try { const u = new URL(location.href); v === 'map' ? u.searchParams.set('view', 'map') : u.searchParams.delete('view'); history.replaceState(null, '', u); } catch (err) {}
+    home();
+  };
+  if (state.view !== 'map') return;
+  ['#q', '#sort', '#count', '#grid'].forEach(s => app.querySelector(s).remove());
+  app.insertAdjacentHTML('beforeend', '<div class="mapwrap"><div id="map"></div><aside id="mapinfo"></aside></div>');
+  document.getElementById('skills').onclick = e => {
+    const b = e.target.closest('[data-s]'); if (!b) return; const s = b.dataset.s;
+    state.skills.has(s) ? state.skills.delete(s) : state.skills.add(s);
+    b.setAttribute('aria-pressed', state.skills.has(s)); drawMap();
+  };
+  drawMap();
+}
+
 function home() {
   const d = document.body.dataset.design;
-  d === '6' ? deckView() : d === '7' ? mapView() : list();
+  d === '6' ? deckView() : d === '2' ? modernView() : list();
 }
 
 const DEFS = {
