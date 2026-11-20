@@ -624,50 +624,58 @@ const ABOUT = [
     <p>The best home is one the program owns, so it does not depend on any of us after we graduate. There are three realistic options.</p>
     <div class="tablewrap"><table>
       <tr><th>Option</th><th>What it takes</th><th>Trade-off</th></tr>
-      <tr><td>The site as built, on free web hosting</td><td>One account owned by Marg or the program, and someone to set it up once</td><td>Best reading experience. Needs a technical person if the design changes or something breaks</td></tr>
-      <tr><td>Google Sites with Google Docs</td><td>A Chemeketa Google account</td><td>Anyone can maintain it. Plainer look, and filtering is a spreadsheet</td></tr>
+      <tr><td>The site as built, on free web hosting</td><td>One account owned by Marg or the program, and someone to set it up once</td><td>Best reading experience. Needs a technical person if the design changes or something breaks. Anyone with the address can read it</td></tr>
+      <tr><td>Google Sites</td><td>A Chemeketa Google account</td><td>Anyone can maintain it, and it can be limited to Chemeketa sign-ins. Plainer look, cumbersome to edit, and every case is added and formatted by hand</td></tr>
       <tr><td>A page on Chemeketa's own website or library</td><td>The college agreeing to host it</td><td>Most permanent. Slowest to arrange, and the college sets the rules</td></tr>
     </table></div>
     <p>Recommendation: use the site as built, with the account in the program's name, and ask Chemeketa whether the library or the program could take it over later. If no one technical will be around, Google Sites is the safer choice.</p>
+    <p>A small Google Sites version with four cases exists for comparison: <a href="https://sites.google.com/view/bas-case-study-prototype" target="_blank" rel="noopener">Google Sites prototype</a>.</p>
     <p>Hosting a site this size should cost nothing. That needs confirming once we pick a host.</p>`],
   ['How would a new case get added?', `
-    <p>Through a submission form, not folders. A "Submit a case" button on the site would open a Google Form that Marg or the program owns, so nobody has to manage files.</p>
+    <p>Through a Google Drive folder that Marg owns. The steps follow how cases already reach our group.</p>
     <ol>
-      <li><strong>The student fills in the form.</strong> It has one box each for the title, Summary, The Case and Questions, checkboxes for the skills, and the publishing permission statement.</li>
-      <li><strong>The answers land in a Google Sheet.</strong> Each case is one row.</li>
-      <li><strong>That year's case study group reviews each row.</strong> They check that it is anonymized, edit where needed, and tick an "Approved" box.</li>
-      <li><strong>The site adds every approved case.</strong> Unticking the box takes a case down again.</li>
+      <li><strong>Students write on a template we design.</strong> They hand the case in to Marg for grading as usual.</li>
+      <li><strong>Marg sends our group the cases that could be included.</strong></li>
+      <li><strong>The group selects and edits in Google Docs.</strong> This is where someone checks that a workplace or a person can't be recognized, and where each case gets its skills and topics.</li>
+      <li><strong>The final versions are saved to the Drive folder.</strong></li>
+      <li><strong>The site shows every case in the folder.</strong> Moving a document out of the folder takes the case down again.</li>
     </ol>
-    <p>The form does three jobs that cohort four did by hand. Separate boxes mean every case arrives in the same structure. No one converts Word or PDF files. The permission answer is recorded with the case.</p>
-    <p>A case should not go live the moment it is submitted. The review step is where someone checks that a workplace or a person can't be recognized.</p>
-    <p>Step 4 is not built yet. Today a case is added by putting a text file in a folder and running one command.</p>`],
-  ['Why a Google Form and not a form built into the website?', `
-    <p>Because this website can only show things. It has nowhere to receive or keep a submission, and a Google Form already does that.</p>
-    <ul>
-      <li><strong>Storage:</strong> a Google Form saves every submission to a Sheet with no setup.</li>
-      <li><strong>A place to review:</strong> the Sheet is also where the group reads, edits and approves each case.</li>
-      <li><strong>Ownership:</strong> Marg can own the Form and Sheet with her Chemeketa account and give each new group edit access.</li>
-      <li><strong>Who can submit:</strong> a Form can be limited to Chemeketa sign-ins, which keeps out spam.</li>
-      <li><strong>Upkeep:</strong> a custom form is a small piece of software someone would have to keep running after we graduate.</li>
-    </ul>
-    <p>It can still feel like part of the website. The Google Form can be embedded in a "Submit a case" page here, so students never leave the site.</p>`],
+    <p>Step 5 is not built yet, and it needs a test to see whether Chemeketa's Google accounts allow it. Today a case is added by putting a text file in a folder and running one command.</p>
+    <p>If Chemeketa's accounts don't allow it, the fallback is Google Sites, where every case is added and formatted by hand.</p>`],
+  ['What does the template need?', `
+    <p>Three headings and a short table. The headings have to be spelled the same way in every case.</p>
+    <ul><li><strong>Summary</strong></li><li><strong>The Case</strong></li><li><strong>Questions</strong></li></ul>
+    <p>The directions are the same for every case, so they live on the site and stay out of the template.</p>
+    <p>The table sits above the first heading and holds the details that the home page and the skill filter run on.</p>
+    <div class="tablewrap"><table>
+      <tr><th>Field</th><th>Who fills it in</th></tr>
+      <tr><td>Title</td><td>The student, and the group may edit it</td></tr>
+      <tr><td>Compelling question</td><td>The student or the group</td></tr>
+      <tr><td>Skills</td><td>The group, chosen from the six</td></tr>
+      <tr><td>Topics</td><td>The group</td></tr>
+      <tr><td>Byline</td><td>The student, as a name or "anonymous"</td></tr>
+      <tr><td>Permission</td><td>The student</td></tr>
+    </table></div>
+    <p>Read time is counted by the site.</p>
+    <p>Plain paragraphs, bold, italics and lists carry over from the document. Images, text boxes, columns and footnotes would not.</p>
+    <p>A renamed heading or a skill spelled differently would keep a section or a case from showing, so the site should flag those for the group before readers see them.</p>`],
   ['Who could see it, and what about permission?', `
-    <p>It should be limited to the class and alumni unless every author agrees to public. The simplest limit is an email sign-in list or a link that is not published anywhere.</p>
+    <p>It should be limited to the class and alumni unless every author agrees to public. On the site as built, the only limit is a link that is not published anywhere, and anyone who has the address can read it. Google Sites can limit readers to Chemeketa sign-ins or a list of people.</p>
     <ul>
-      <li><strong>Permission:</strong> the statement we already require goes into the form. It should name the website, not only a book.</li>
+      <li><strong>Permission:</strong> the statement we already require is handed in with the case and recorded in the template. It should name the website, not only a book.</li>
       <li><strong>Editing:</strong> the statement should say the group may edit titles and questions.</li>
       <li><strong>Name or no name:</strong> each author chooses a byline or anonymous.</li>
       <li><strong>People in the story:</strong> an author can't give permission for a coworker or employer. An editor still has to check that they can't be identified.</li>
       <li><strong>Personal accounts:</strong> the example leaves out two cohort four cases that were first-person and sensitive.</li>
     </ul>`],
   ['What happens after we graduate?', `
-    <p>The form, the sheet and the hosting account stay with Marg or the program. Each new case study group gets edit access to the sheet, and the yearly work is reviewing rows and ticking boxes.</p>
+    <p>The Drive folder, the template and the hosting account stay with Marg or the program. Each new case study group gets edit access to the folder, and the yearly work is editing that year's cases and saving them there.</p>
     <p>The technical side only needs attention if the design changes or something breaks.</p>
-    <p>A printed book or a PDF is still possible. The cases are stored as plain text, so the same content can go to the Press later.</p>`],
+    <p>A printed book or a PDF is still possible. The cases are stored as Google Docs with the same headings, so the same content can go to the Press later.</p>`],
   ['What is done, and what is still open?', `
-    <p>The example site and its six mockups are built. Nothing else is.</p>
+    <p>The example site and its six mockups are built, and so is a small Google Sites version. Nothing else is.</p>
     <h3>Left to build if we go ahead</h3>
-    <ul><li>The submission form and its sheet</li><li>The link that adds approved cases to the site</li><li>The sign-in or private link</li><li>Loading cohort five's cases</li></ul>
+    <ul><li>The case template</li><li>The Drive folder and the link that puts its cases on the site</li><li>A test of that link on a Chemeketa Google account</li><li>Loading cohort five's cases</li></ul>
     <h3>Questions for Marg and Chemeketa</h3>
     <ul><li>Can the college or the library host this, or own the account?</li><li>Is there a standard release form we should use in place of our own statement?</li><li>Who carries the project on after cohort five?</li><li>Does a website meet the project brief, or only alongside the Press book?</li></ul>
     <h3>Questions for our group</h3>
